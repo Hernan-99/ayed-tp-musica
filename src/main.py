@@ -1,5 +1,6 @@
 from src.config import TEMA
 from src.dominio.song import lists_songs
+from src.dominio.song import show_version
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -41,6 +42,9 @@ def main():
             print("Chau.")
         elif opcion == "1":
             lists_songs()
+        elif opcion == "5":
+            song_id  = int(input("Ingrese el ID de la cancion: "))
+            show_version(song_id)
         elif opcion in {"1", "2", "3", "4", "5", "6", "7", "8", "9"}:
             pendiente()
         else:

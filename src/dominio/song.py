@@ -1,5 +1,7 @@
 # id, titulo, artista, album, genero, anio, duracion_seg
 
+
+# LEGACY
 genre = [
     {"id": 1, "name": "Rock"},
     {"id": 2, "name": "Pop"},
@@ -9,85 +11,141 @@ genre = [
     {"id": 6, "name": "Electronica"},
 ]
 
+class Song:
+    # metodo constructor. 
+    def __init__(self, 
+                 id: int, 
+                 titulo: str, 
+                 artista: str, 
+                 album: str, 
+                 genero: int, 
+                 anio: int, 
+                 duracion_seg: int,
+                 version_derivada:list | None = None # si no tien version derivada
+                 ):
+
+        # atributos
+        self.id = id
+        self.titulo = titulo
+        self.artista = artista
+        self.album = album
+        self.genero = genero
+        self.anio = anio
+        self.duracion_seg = duracion_seg
+        self.version_derivada = [] if version_derivada is None else version_derivada
+
+
+
 library = [
-    {"id": 1, "titulo": "De Musica Ligera", "artista": "Soda Stereo", "album": "Cancion Animal", "genero": 1, "anio": 1990, "duracion_seg": 213},
-    {"id": 2, "titulo": "Persiana Americana", "artista": "Soda Stereo", "album": "Signos", "genero": 1, "anio": 1986, "duracion_seg": 263},
-    {"id": 3, "titulo": "En la Ciudad de la Furia", "artista": "Soda Stereo", "album": "Doble Vida", "genero": 1, "anio": 1988, "duracion_seg": 351},
-    {"id": 4, "titulo": "Crimen", "artista": "Gustavo Cerati", "album": "Ahí vamos", "genero": 1, "anio": 2006, "duracion_seg": 239},
-    {"id": 5, "titulo": "Adios", "artista": "Gustavo Cerati", "album": "Fuerza Natural", "genero": 1, "anio": 2009, "duracion_seg": 233},
-    {"id": 6, "titulo": "Muchacha ojos de papel", "artista": "Luis Alberto Spinetta", "album": "Almendra", "genero": 1, "anio": 1969, "duracion_seg": 203},
-    {"id": 7, "titulo": "Cantata de Puentes Amarillos", "artista": "Luis Alberto Spinetta", "album": "Artaud", "genero": 1, "anio": 1973, "duracion_seg": 557},
-    {"id": 8, "titulo": "Rasguña las Piedras", "artista": "Sui Generis", "album": "Confesiones de Invierno", "genero": 1, "anio": 1973, "duracion_seg": 196},
-    {"id": 9, "titulo": "Seminare", "artista": "Seru Giran", "album": "La Grasa de las Capitales", "genero": 1, "anio": 1979, "duracion_seg": 241},
-    {"id": 10, "titulo": "Los Dinosaurios", "artista": "Charly Garcia", "album": "Clics Modernos", "genero": 1, "anio": 1983, "duracion_seg": 241},
-    {"id": 11, "titulo": "Demoliendo Hoteles", "artista": "Charly Garcia", "album": "Piano Bar", "genero": 1, "anio": 1984, "duracion_seg": 151},
-    {"id": 12, "titulo": "Jijiji", "artista": "Patricio Rey y sus Redonditos de Ricota", "album": "Un Baion para el Ojo Idiota", "genero": 1, "anio": 1988, "duracion_seg": 316},
-    {"id": 13, "titulo": "Ji Ji Ji", "artista": "Patricio Rey y sus Redonditos de Ricota", "album": "En Directo", "genero": 1, "anio": 1992, "duracion_seg": 318},
-    {"id": 14, "titulo": "La Bestia Pop", "artista": "Patricio Rey y sus Redonditos de Ricota", "album": "Oktubre", "genero": 1, "anio": 1986, "duracion_seg": 240},
-    {"id": 15, "titulo": "Alfonsina y el mar", "artista": "Mercedes Sosa", "album": "Mujeres Argentinas", "genero": 3, "anio": 1969, "duracion_seg": 298},
-    {"id": 16, "titulo": "Gracias a la Vida", "artista": "Mercedes Sosa", "album": "Hasta la Victoria", "genero": 3, "anio": 1971, "duracion_seg": 271},
-    {"id": 17, "titulo": "La Balsa", "artista": "Los Gatos", "album": "Los Gatos", "genero": 1, "anio": 1967, "duracion_seg": 187},
-    {"id": 18, "titulo": "El Extraño de Pelo Largo", "artista": "Almendra", "album": "Almendra", "genero": 1, "anio": 1969, "duracion_seg": 198},
-    {"id": 19, "titulo": "Flaca", "artista": "Andres Calamaro", "album": "Honestidad Brutal", "genero": 1, "anio": 1999, "duracion_seg": 263},
-    {"id": 20, "titulo": "Lamento Boliviano", "artista": "Los Enanitos Verdes", "album": "Big Bang", "genero": 1, "anio": 1994, "duracion_seg": 223},
-    {"id": 21, "titulo": "La Guitarra", "artista": "Los Autenticos Decadentes", "album": "Mi Enfermedad", "genero": 4, "anio": 1997, "duracion_seg": 201},
-    {"id": 22, "titulo": "Waka Waka", "artista": "Shakira", "album": "Sale el Sol", "genero": 2, "anio": 2010, "duracion_seg": 202},
-    {"id": 23, "titulo": "Bzrp Music Sessions Vol. 52", "artista": "Bizarrap", "album": "Sessions", "genero": 5, "anio": 2022, "duracion_seg": 201},
-    {"id": 24, "titulo": "Bzrp Music Sessions Vol. 53", "artista": "Bizarrap", "album": "Sessions", "genero": 5, "anio": 2023, "duracion_seg": 194},
-    {"id": 25, "titulo": "Natacha", "artista": "Wos", "album": "Oscuro Extasis", "genero": 5, "anio": 2019, "duracion_seg": 183},
-    {"id": 26, "titulo": "Canguros", "artista": "Wos", "album": "Tres Puntos Suspensivos", "genero": 5, "anio": 2021, "duracion_seg": 176},
-    {"id": 27, "titulo": "Buenos Aires", "artista": "Nathy Peluso", "album": "Calambre", "genero": 5, "anio": 2020, "duracion_seg": 198},
-    {"id": 28, "titulo": "Despecha", "artista": "Rosalia", "album": "Motomami", "genero": 2, "anio": 2022, "duracion_seg": 157},
-    {"id": 29, "titulo": "Titi Me Pregunto", "artista": "Bad Bunny", "album": "Un Verano Sin Ti", "genero": 5, "anio": 2022, "duracion_seg": 243},
-    {"id": 30, "titulo": "Anti-Hero", "artista": "Taylor Swift", "album": "Midnights", "genero": 2, "anio": 2022, "duracion_seg": 201},
-    {"id": 31, "titulo": "Blank Space", "artista": "Taylor Swift", "album": "1989", "genero": 2, "anio": 2014, "duracion_seg": 231},
-    {"id": 32, "titulo": "Bohemian Rhapsody", "artista": "Queen", "album": "A Night at the Opera", "genero": 1, "anio": 1975, "duracion_seg": 354},
-    {"id": 33, "titulo": "Bohemian Rhapsody (Live Aid)", "artista": "Queen", "album": "Live Aid", "genero": 1, "anio": 1985, "duracion_seg": 362},
-    {"id": 34, "titulo": "Don't Stop Me Now", "artista": "Queen", "album": "Jazz", "genero": 1, "anio": 1978, "duracion_seg": 209},
-    {"id": 35, "titulo": "Come Together", "artista": "The Beatles", "album": "Abbey Road", "genero": 1, "anio": 1969, "duracion_seg": 259},
-    {"id": 36, "titulo": "Here Comes the Sun", "artista": "The Beatles", "album": "Abbey Road", "genero": 1, "anio": 1969, "duracion_seg": 185},
-    {"id": 37, "titulo": "Get Lucky", "artista": "Daft Punk", "album": "Random Access Memories", "genero": 6, "anio": 2013, "duracion_seg": 248},
-    {"id": 38, "titulo": "One More Time", "artista": "Daft Punk", "album": "Discovery", "genero": 6, "anio": 2000, "duracion_seg": 320},
-    {"id": 39, "titulo": "Rolling in the Deep", "artista": "Adele", "album": "21", "genero": 2, "anio": 2010, "duracion_seg": 228},
-    {"id": 40, "titulo": "Someone Like You", "artista": "Adele", "album": "21", "genero": 2, "anio": 2011, "duracion_seg": 285},
-    {"id": 41, "titulo": "Do I Wanna Know", "artista": "Arctic Monkeys", "album": "AM", "genero": 1, "anio": 2013, "duracion_seg": 272},
-    {"id": 42, "titulo": "505", "artista": "Arctic Monkeys", "album": "Favourite Worst Nightmare", "genero": 1, "anio": 2007, "duracion_seg": 214},
-    {"id": 43, "titulo": "Blinding Lights", "artista": "The Weeknd", "album": "After Hours", "genero": 2, "anio": 2019, "duracion_seg": 200},
-    {"id": 44, "titulo": "Levitating", "artista": "Dua Lipa", "album": "Future Nostalgia", "genero": 2, "anio": 2020, "duracion_seg": 203},
-    {"id": 45, "titulo": "As It Was", "artista": "Harry Styles", "album": "Harry's House", "genero": 2, "anio": 2022, "duracion_seg": 167},
-    {"id": 46, "titulo": "Smells Like Teen Spirit", "artista": "Nirvana", "album": "Nevermind", "genero": 1, "anio": 1991, "duracion_seg": 301},
-    {"id": 47, "titulo": "Wonderwall", "artista": "Oasis", "album": "What's the Story Morning Glory", "genero": 1, "anio": 1995, "duracion_seg": 258},
-    {"id": 48, "titulo": "Wonderwall (Live)", "artista": "Oasis", "album": "Familiar to Millions", "genero": 1, "anio": 2000, "duracion_seg": 265},
-    {"id": 49, "titulo": "Take On Me", "artista": "a-ha", "album": "Hunting High and Low", "genero": 2, "anio": 1985, "duracion_seg": 225},
-    {"id": 50, "titulo": "Africa", "artista": "Toto", "album": "Toto IV", "genero": 2, "anio": 1982, "duracion_seg": 296},
-    {"id": 51, "titulo": "Billie Jean", "artista": "Michael Jackson", "album": "Thriller", "genero": 2, "anio": 1982, "duracion_seg": 294},
-    {"id": 52, "titulo": "Billie Jean (Remix)", "artista": "Michael Jackson", "album": "Thriller 40", "genero": 2, "anio": 2022, "duracion_seg": 292},
-    {"id": 53, "titulo": "Clocks", "artista": "Coldplay", "album": "A Rush of Blood to the Head", "genero": 1, "anio": 2002, "duracion_seg": 307},
-    {"id": 54, "titulo": "Yellow", "artista": "Coldplay", "album": "Parachutes", "genero": 1, "anio": 2000, "duracion_seg": 269},
-    {"id": 55, "titulo": "Creep", "artista": "Radiohead", "album": "Pablo Honey", "genero": 1, "anio": 1992, "duracion_seg": 238},
-    {"id": 56, "titulo": "Karma Police", "artista": "Radiohead", "album": "OK Computer", "genero": 1, "anio": 1997, "duracion_seg": 261},
-    {"id": 57, "titulo": "Vino Griego", "artista": "Los Abuelos de la Nada", "album": "Vasos y Besos", "genero": 1, "anio": 1983, "duracion_seg": 214},
-    {"id": 58, "titulo": "Lunes Por La Madrugada", "artista": "Los Abuelos de la Nada", "album": "Los Abuelos de la Nada", "genero": 1, "anio": 1982, "duracion_seg": 241},
-    {"id": 59, "titulo": "El Aguante", "artista": "Divididos", "album": "Gol de Mujer", "genero": 1, "anio": 1998, "duracion_seg": 245},
-    {"id": 60, "titulo": "Que Ves", "artista": "Divididos", "album": "Acariciando lo Aspero", "genero": 1, "anio": 1991, "duracion_seg": 232},
-    {"id": 61, "titulo": "Gracias a la Vida", "artista": "Violeta Parra", "album": "Las Ultimas Composiciones", "genero": 3, "anio": 1966, "duracion_seg": 258},
-    {"id": 62, "titulo": "De Musica Ligera (Unplugged)", "artista": "Soda Stereo", "album": "Comfort y Musica Para Volar", "genero": 1, "anio": 1996, "duracion_seg": 221},
-    {"id": 63, "titulo": "Flaca (En vivo)", "artista": "Andres Calamaro", "album": "Vivo", "genero": 1, "anio": 2000, "duracion_seg": 270},
-    {"id": 64, "titulo": "Creep (Live)", "artista": "Radiohead", "album": "The Astoria London", "genero": 1, "anio": 1994, "duracion_seg": 245},
-    {"id": 65, "titulo": "Yellow (Live)", "artista": "Coldplay", "album": "Live 2003", "genero": 1, "anio": 2003, "duracion_seg": 280},
-    {"id": 66, "titulo": "Blank Space (Acoustic)", "artista": "Taylor Swift", "album": "1989", "genero": 2, "anio": 2014, "duracion_seg": 228},
-    {"id": 67, "titulo": "Get Lucky (Daft Punk Remix)", "artista": "Daft Punk", "album": "Random Access Memories", "genero": 6, "anio": 2013, "duracion_seg": 248},
+    Song(1, "De Musica Ligera", "Soda Stereo", "Cancion Animal", 1, 1990, 213, [62]),
+    Song(2, "Persiana Americana", "Soda Stereo", "Signos", 1, 1986, 263),
+    Song(3, "En la Ciudad de la Furia", "Soda Stereo", "Doble Vida", 1, 1988, 351),
+    Song(4, "Crimen", "Gustavo Cerati", "Ahí vamos", 1, 2006, 239),
+    Song(5, "Adios", "Gustavo Cerati", "Fuerza Natural", 1, 2009, 233),
+    Song(6, "Muchacha ojos de papel", "Luis Alberto Spinetta", "Almendra", 1, 1969, 203),
+    Song(7, "Cantata de Puentes Amarillos", "Luis Alberto Spinetta", "Artaud", 1, 1973, 557),
+    Song(8, "Rasguña las Piedras", "Sui Generis", "Confesiones de Invierno", 1, 1973, 196),
+    Song(9, "Seminare", "Seru Giran", "La Grasa de las Capitales", 1, 1979, 241),
+    Song(10, "Los Dinosaurios", "Charly Garcia", "Clics Modernos", 1, 1983, 241),
+    Song(11, "Demoliendo Hoteles", "Charly Garcia", "Piano Bar", 1, 1984, 151),
+    Song(12, "Jijiji", "Patricio Rey y sus Redonditos de Ricota", "Un Baion para el Ojo Idiota", 1, 1988, 316, [13]),
+    Song(13, "Ji Ji Ji", "Patricio Rey y sus Redonditos de Ricota", "En Directo", 1, 1992, 318),
+    Song(14, "La Bestia Pop", "Patricio Rey y sus Redonditos de Ricota", "Oktubre", 1, 1986, 240),
+    Song(15, "Alfonsina y el mar", "Mercedes Sosa", "Mujeres Argentinas", 3, 1969, 298),
+    Song(16, "Gracias a la Vida", "Mercedes Sosa", "Hasta la Victoria", 3, 1971, 271, [61]),
+    Song(17, "La Balsa", "Los Gatos", "Los Gatos", 1, 1967, 187),
+    Song(18, "El Extraño de Pelo Largo", "Almendra", "Almendra", 1, 1969, 198),
+    Song(19, "Flaca", "Andres Calamaro", "Honestidad Brutal", 1, 1999, 263, [63]),
+    Song(20, "Lamento Boliviano", "Los Enanitos Verdes", "Big Bang", 1, 1994, 223),
+    Song(21, "La Guitarra", "Los Autenticos Decadentes", "Mi Enfermedad", 4, 1997, 201),
+    Song(22, "Waka Waka", "Shakira", "Sale el Sol", 2, 2010, 202),
+    Song(23, "Bzrp Music Sessions Vol. 52", "Bizarrap", "Sessions", 5, 2022, 201),
+    Song(24, "Bzrp Music Sessions Vol. 53", "Bizarrap", "Sessions", 5, 2023, 194),
+    Song(25, "Natacha", "Wos", "Oscuro Extasis", 5, 2019, 183),
+    Song(26, "Canguros", "Wos", "Tres Puntos Suspensivos", 5, 2021, 176),
+    Song(27, "Buenos Aires", "Nathy Peluso", "Calambre", 5, 2020, 198),
+    Song(28, "Despecha", "Rosalia", "Motomami", 2, 2022, 157),
+    Song(29, "Titi Me Pregunto", "Bad Bunny", "Un Verano Sin Ti", 5, 2022, 243),
+    Song(30, "Anti-Hero", "Taylor Swift", "Midnights", 2, 2022, 201),
+    Song(31, "Blank Space", "Taylor Swift", "1989", 2, 2014, 231,[66]),
+    Song(32, "Bohemian Rhapsody", "Queen", "A Night at the Opera", 1, 1975, 354, [33]),
+    Song(33, "Bohemian Rhapsody (Live Aid)", "Queen", "Live Aid", 1, 1985, 362),
+    Song(34, "Don't Stop Me Now", "Queen", "Jazz", 1, 1978, 209),
+    Song(35, "Come Together", "The Beatles", "Abbey Road", 1, 1969, 259),
+    Song(36, "Here Comes the Sun", "The Beatles", "Abbey Road", 1, 1969, 185),
+    Song(37, "Get Lucky", "Daft Punk", "Random Access Memories", 6, 2013, 248, [67]),
+    Song(38, "One More Time", "Daft Punk", "Discovery", 6, 2000, 320),
+    Song(39, "Rolling in the Deep", "Adele", "21", 2, 2010, 228),
+    Song(40, "Someone Like You", "Adele", "21", 2, 2011, 285),
+    Song(41, "Do I Wanna Know", "Arctic Monkeys", "AM", 1, 2013, 272),
+    Song(42, "505", "Arctic Monkeys", "Favourite Worst Nightmare", 1, 2007, 214),
+    Song(43, "Blinding Lights", "The Weeknd", "After Hours", 2, 2019, 200),
+    Song(44, "Levitating", "Dua Lipa", "Future Nostalgia", 2, 2020, 203),
+    Song(45, "As It Was", "Harry Styles", "Harry's House", 2, 2022, 167),
+    Song(46, "Smells Like Teen Spirit", "Nirvana", "Nevermind", 1, 1991, 301),
+    Song(47, "Wonderwall", "Oasis", "What's the Story Morning Glory", 1, 1995, 258, [48]),
+    Song(48, "Wonderwall (Live)", "Oasis", "Familiar to Millions", 1, 2000, 265),
+    Song(49, "Take On Me", "a-ha", "Hunting High and Low", 2, 1985, 225),
+    Song(50, "Africa", "Toto", "Toto IV", 2, 1982, 296),
+    Song(51, "Billie Jean", "Michael Jackson", "Thriller", 2, 1982, 294, [52]),
+    Song(52, "Billie Jean (Remix)", "Michael Jackson", "Thriller 40", 2, 2022, 292),
+    Song(53, "Clocks", "Coldplay", "A Rush of Blood to the Head", 1, 2002, 307),
+    Song(54, "Yellow", "Coldplay", "Parachutes", 1, 2000, 269, [65]),
+    Song(55, "Creep", "Radiohead", "Pablo Honey", 1, 1992, 238, [64]),
+    Song(56, "Karma Police", "Radiohead", "OK Computer", 1, 1997, 261),
+    Song(57, "Vino Griego", "Los Abuelos de la Nada", "Vasos y Besos", 1, 1983, 214),
+    Song(58, "Lunes Por La Madrugada", "Los Abuelos de la Nada", "Los Abuelos de la Nada", 1, 1982, 241),
+    Song(59, "El Aguante", "Divididos", "Gol de Mujer", 1, 1998, 245),
+    Song(60, "Que Ves", "Divididos", "Acariciando lo Aspero", 1, 1991, 232),
+    Song(61, "Gracias a la Vida", "Violeta Parra", "Las Ultimas Composiciones", 3, 1966, 258),
+    Song(62, "De Musica Ligera (Unplugged)", "Soda Stereo", "Comfort y Musica Para Volar", 1, 1996, 221),
+    Song(63, "Flaca (En vivo)", "Andres Calamaro", "Vivo", 1, 2000, 270),
+    Song(64, "Creep (Live)", "Radiohead", "The Astoria London", 1, 1994, 245),
+    Song(65, "Yellow (Live)", "Coldplay", "Live 2003", 1, 2003, 280),
+    Song(66, "Blank Space (Acoustic)", "Taylor Swift", "1989", 2, 2014, 228),
+    Song(67, "Get Lucky (Daft Punk Remix)", "Daft Punk", "Random Access Memories", 6, 2013, 248),
 ]
 
 def lists_songs():
     for song in library:
         print(
-            f"Titulo: {song['titulo']}, "
-            f"Artista: {song['artista']}, "
-            f"Album: {song['album']}, "
-            f"Genero: {song['genero']}, "
-            f"Anio: {song['anio']}, "
-            f"Duracion: {song['duracion_seg']} segundos"
+            f"Titulo: {song.titulo}, "
+            f"Artista: {song.artista}, "
+            f"Album: {song.album}, "
+            f"Genero: {song.genero}, "
+            f"Anio: {song.anio}, "
+            f"Duracion: {song.duracion_seg} segundos"
         )
 
+        if song.version_derivada: # si esto valida en true
+            print("Versiones derivadas:")
+            for v_id in song.version_derivada:
+                version = get_by_id(v_id)
 
+                if version is not None: # si se encuentra cancion, asocio a id
+                    print(version.titulo, version.artista, version.album, version.genero, version.anio, str(version.duracion_seg) + " segundos")
+
+
+def get_by_id(id:int):
+    for song in library:
+        if song.id == id:
+            return song
+    return None
+
+
+def show_version(id:int):
+
+    # Busco cancion segun el id que es pasad
+    song = get_by_id(id)
+
+    if song is not None: # Si la cancion existe, muestro los datos
+        print(f"Titulo: {song.titulo}, Artista: {song.artista}, Album: {song.album}, Genero: {song.genero}, Anio: {song.anio}, Duracion: {song.duracion_seg} segundos")
+
+        # bucle para recorrer id's de las versiones derivadas, dos casos:
+        # 1. si la lista esta vacia termina el bucle y termina la funcion
+        for version_id in song.version_derivada:
+                # 2.  recursividad: vuelve a ejecutar la funcion para cada version derivada
+                show_version(version_id)
+    else:
+        # Se ejecuta si el ID que se pasa no corresponde a ninguna cancion
+        print("Cancion no encontrada")

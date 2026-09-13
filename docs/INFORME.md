@@ -19,10 +19,22 @@ Qué es un ítem del catálogo. Qué es mutable y qué no (E1). Cómo se relacio
 
 ## 3. Recursión (E2)
 
-- Función:
-- Caso base:
-- Caso recursivo:
+- Función: `show_version(id)`. Recibe el ID de una cancion, busca la cancion en el catalogo y muestra los datos junto con sus versiones derivadas 
+- Caso base: ocurre cuando la cancion no tiene versiones derivadas. En ese caso, `version_derivada` es una lista vacia, por ende no entra al bucle `for` y la funcion termina
+- Caso recursivo: si la cancion tiene versiones derivadas, se recorren los IDs y se vuelve a llamar a `show_version(version_id)` para cada una
 - Traza de un ejemplo real del dataset:
+    ```text
+    show_version(1)
+        Busca ID 1
+        Muestra "De Musica Ligera"
+        version_derivada = [62]
+
+        show_version(62)
+            Busca ID 62
+            Muestra "De Musica Ligera (Unplugged)"
+            version_derivada = []
+            Fin
+    ```
 
 ## 4. TADs (E3)
 

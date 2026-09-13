@@ -7,7 +7,7 @@ Fecha de esta versión del archivo:
 | Entrega | Fecha | Herramienta (ChatGPT, Cursor, Copilot, otra) | Para qué (diseño, código, debug, docs) | Qué pegaron o generaron | Qué reescribieron / revisaron a mano | Integrante |
 | --- | --- | --- | --- | --- | --- | --- |
 | E1 |  |  |  |  |  |  |
-| E2 |  |  |  |  |  |  |
+| E2 | 12/09/2026 | ChatGPT | codigo | se utilizo para la creacion de los 67 objetos de library y evitar escribirlos a mano uno por uno | manualmente agregue la vinculacion de versiones derivadas | Hernan Sanchez |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |
 | E5 |  |  |  |  |  |  |
