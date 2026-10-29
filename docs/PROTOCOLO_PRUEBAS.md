@@ -9,13 +9,13 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | ID | Entrega | Acción (pasos en el CLI) | Datos | Resultado esperado | Resultado | Notas |
 | --- | --- | --- | --- | --- | --- | --- |
 | P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback | pasa | se muestra catalogo |
-| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue |  |  |
+| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | pasa | muestra mensaje de canción no encontrada y vuelve al menú sin errores |
 | P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa | pasa | muestra "De Musica Ligera" y "De Musica Ligera (Unplugged)" |
 | P04 | E2 | Operación recursiva sobre un ítem sin derivados | id = 2 | solo el ítem (caso base) | pasa | muestra solo la cancion y finaliza correctamente  |
-| P05 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia |  |  |
-| P06 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue |  |  |
-| P07 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue |  |  |
-| P08 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones |  |  |
+| P05 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia | pasa | la playlist rechaza un nuevo elemento cunado se llena |
+| P06 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue | pasa | comprobacion del manejo de PilaVaciaError |
+| P07 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue | pasa | comprobacion del manejo de ColaVaciaError |
+| P08 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones | pasa | la playlist y la cola se recorren mediante iteradores |
 | P09 | E4 | Búsqueda lineal de un nombre que existe |  | lo encuentra |  |  |
 | P10 | E4 | Búsqueda lineal de un nombre que no existe |  | no encontrado, sin traceback |  |  |
 | P11 | E4 | Búsqueda binaria con catálogo desordenado |  | avisa o reordena; no da un falso hit |  |  |

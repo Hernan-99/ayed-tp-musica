@@ -40,11 +40,15 @@ Qué es un ítem del catálogo. Qué es mutable y qué no (E1). Cómo se relacio
 
 | TAD | Operaciones | Invariante |
 | --- | --- | --- |
-| ListaEnlazada |  |  |
-| Pila |  |  |
-| Cola |  |  |
+| ListaEnlazada | insertar_al_inicio, insertar_al_final, insertar_ordenado, buscar, eliminar, tamanio, esta_vacia, iterador (__iter__) | Cada nodo apunta al siguiente y el último apunta a None. El tamaño registrado coincide con la cantidad de nodos. |
+| Pila | apilar, desapilar, ver_tope, esta_vacia | El último elemento agregado es el primero en salir (LIFO). Los elementos se agregan y retiran por el inicio de la lista enlazada. |
+| Cola | encolar, desencolar, ver_frente, esta_vacia | El primer elemento agregado es el primero en salir (FIFO). Los elementos se agregan al final y se retiran por el inicio de la lista enlazada. |
 
 Dónde se usa cada uno en el dominio.
+- **ListaEnlazada**: almacena los elementos de las estructuras sin utilizar una lista de Python como almacenamiento interno.
+- **Pila**: representa el historial de reproducción de canciones. Permite consultar la última canción registrada y retirarla siguiendo el comportamiento LIFO.
+- **Cola**: representa las canciones pendientes de reproducción. Permite consultar y reproducir la siguiente canción siguiendo el comportamiento FIFO.
+- **Playlist**: representa la colección principal de canciones, implementada sobre ListaEnlazada, con una capacidad máxima de seis elementos. Si se intenta agregar una canción cuando está llena, se lanza ColeccionLlenaError.
 
 ## 5. Complejidad (E4)
 
