@@ -16,10 +16,10 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | P06 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue | pasa | comprobacion del manejo de PilaVaciaError |
 | P07 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue | pasa | comprobacion del manejo de ColaVaciaError |
 | P08 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones | pasa | la playlist y la cola se recorren mediante iteradores |
-| P09 | E4 | Búsqueda lineal de un nombre que existe |  | lo encuentra |  |  |
-| P10 | E4 | Búsqueda lineal de un nombre que no existe |  | no encontrado, sin traceback |  |  |
-| P11 | E4 | Búsqueda binaria con catálogo desordenado |  | avisa o reordena; no da un falso hit |  |  |
-| P12 | E4 | Ordenar por un criterio y después por otro |  | el orden cambia |  |  |
+| P09 | E4 | Búsqueda lineal de un nombre que existe | titulo = Persiana Americana | lo encuentra | pasa | encuentra Persiana Americana de Soda Stereo |
+| P10 | E4 | Búsqueda lineal de un nombre que no existe | titulo = Cancion Inexistente | no encontrado, sin traceback | pasa | muestra mensaje de canción no encontrada y vuelve al menú |
+| P11 | E4 | Búsqueda binaria con catálogo desordenado | titulo = Yellow | avisa o reordena; no da un falso hit | pasa  | ordena una copia del catálogo por título antes de realizar la búsqueda y encuentra Yellow de Coldplay |
+| P12 | E4 | Ordenar por un criterio y después por otro | título y año | el orden cambia | pasa | selección ordena por título e inserción por año; el catálogo original permanece sin modificaciones |
 | P13 | E5 | Guardar texto (`.txt`), salir, volver a entrar |  | los datos siguen |  |  |
 | P14 | E5 | Guardar binario y modificar un registro por id |  | al recargar, ese campo cambió |  |  |
 | P15 | E5 | Abrir un binario truncado o con magia mala | archivo basura | excepción de archivo inválido |  |  |

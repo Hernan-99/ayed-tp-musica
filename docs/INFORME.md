@@ -54,13 +54,41 @@ Dónde se usa cada uno en el dominio.
 
 | Operación | Tiempo | Espacio | Por qué |
 | --- | --- | --- | --- |
-|  |  |  |  |
+| Búsqueda lineal | O(n) | O(1) | Recorre los elementos uno por uno hasta encontrar la coincidencia o llegar al final de la colección. |
+| Búsqueda binaria | O(log n) | O(1) | En cada iteración divide a la mitad el intervalo de búsqueda. Requiere que la colección esté ordenada previamente. |
+| Ordenamiento por selección | O(n²) | O(1) | Utiliza dos ciclos anidados para encontrar el menor elemento de la parte no ordenada. |
+| Ordenamiento por inserción | O(n²) | O(1) | En el peor caso debe desplazar los elementos anteriores para insertar cada elemento en su posición. |
+| ListaEnlazada: insertar_al_inicio | O(1) | O(1) | Crea un nodo y actualiza la referencia a la cabeza. |
+| ListaEnlazada: insertar_al_final | O(n) | O(1) | Recorre la lista hasta encontrar el último nodo. |
+| ListaEnlazada: buscar / eliminar | O(n) | O(1) | Puede ser necesario recorrer todos los nodos para encontrar el elemento. |
+| ListaEnlazada: insertar_ordenado | O(n) | O(1) | Recorre los nodos hasta encontrar la posición correspondiente. |
+| ListaEnlazada: tamanio / esta_vacia | O(1) | O(1) | Consulta atributos almacenados directamente en la estructura. |
+| Pila: apilar / desapilar / ver_tope | O(1) | O(1) | Las operaciones trabajan directamente sobre el primer nodo de la lista enlazada. |
+| Cola: encolar | O(n) | O(1) | Inserta al final utilizando `insertar_al_final`, que recorre la lista. |
+| Cola: desencolar / ver_frente | O(1) | O(1) | Accede directamente al primer nodo de la lista enlazada. |
+| Playlist: agregar / eliminar | O(n) | O(1) | Agregar recorre la lista para insertar al final y eliminar puede recorrerla para encontrar la canción. |
+
+*Nota: el espacio indicado corresponde al espacio auxiliar de cada operación, sin contar la estructura de datos ni la colección recibida. En el menú, los ordenamientos y la búsqueda binaria trabajan sobre una copia del catálogo, que requiere O(n) espacio adicional.*
+
 
 Mediciones (`time.perf_counter`):
 
 | Operación | n | segundos |
 | --- | --- | --- |
-|  |  |  |
+| Búsqueda lineal | 67 | 0.00000934 |
+| Búsqueda lineal | 670 | 0.00015726 |
+| Búsqueda binaria | 67 | 0.00000247 |
+| Búsqueda binaria | 670 | 0.00000407 |
+| Ordenamiento por selección | 67 | 0.00063408 |
+| Ordenamiento por selección | 670 | 0.07144154 |
+| Ordenamiento por inserción | 67 | 0.00043978 |
+| Ordenamiento por inserción | 670 | 0.07626102 |
+
+Las mediciones muestran que la búsqueda binaria presenta un crecimiento reducido al aumentar el tamaño de la colección, mientras que la búsqueda lineal y los ordenamientos presentan incrementos mayores.
+
+La búsqueda binaria se midió sobre una colección previamente ordenada, sin incluir el tiempo necesario para prepararla. En el menú, esa preparación se realiza mediante ordenamiento por inserción, por lo que la operación completa tiene una complejidad O(n²).
+
+
 
 ## 6. Persistencia (E5)
 

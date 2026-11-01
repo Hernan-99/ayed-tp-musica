@@ -9,6 +9,16 @@ from src.excepciones import (
     ColaVaciaError,
 )
 
+from src.algoritmos.busqueda import (
+    busqueda_lineal,
+    busqueda_binaria,
+)
+
+from src.algoritmos.ordenamiento import (
+    ordenar_insercion,
+    ordenar_seleccion,
+)
+
 TEMAS = {
     "pokedex": "Pokédex",
     "recetario": "Recetario",
@@ -53,6 +63,77 @@ def main():
             print("Chau.")
         elif opcion == "1":
             lists_songs()
+        elif opcion == "3":
+            print("=== Buscar cancion ===")
+            print("1. Búsqueda lineal")
+            print("2. Búsqueda binaria")
+            print("0. Volver") 
+            action = input("> ").strip()
+
+            if action in {"1", "2"}:
+                title = input("Ingresar el titulo de la cancion: ").strip()
+                if action == "1":
+                    song = busqueda_lineal(
+                        library,
+                        title,
+                        lambda item: item.titulo
+                    )
+                else:
+                    ordered_library = library.copy()
+
+                    ordenar_insercion(
+                        ordered_library,
+                        lambda item: item.titulo
+                    )
+
+                    print("Catalogo ordenado por titulo para realizar la busqueda.")
+                    song = busqueda_binaria(
+                        ordered_library,
+                        title,
+                        lambda item: item.titulo
+                    )
+
+                # mostrar resultado para ambas busquedas
+                if song is not None:
+                    print(f"Cancion encontrada: {song.titulo} - {song.artista}")
+                else:
+                    print("Cancion no encontrada")
+        elif opcion == "4":
+            print("=== Ordenar catálogo ===")
+            print("1. Ordenar por título (selección)")
+            print("2. Ordenar por año (inserción)")
+            print("0. Volver")
+
+            action = input("> ").strip()
+
+            if action == "1":
+                ordered_library = library.copy()
+
+                ordenar_seleccion(
+                    ordered_library,
+                    lambda item: item.titulo
+                )
+
+                print("\nCatálogo ordenado por título:")
+
+                for song in ordered_library:
+                    print(f"{song.titulo} - {song.artista}")
+
+            elif action == "2":
+                ordered_library = library.copy()
+
+                ordenar_insercion(
+                    ordered_library,
+                    lambda item: item.anio
+                )
+
+                print("\nCatálogo ordenado por año:")
+
+                for song in ordered_library:
+                    print(f"{song.anio} - {song.titulo} - {song.artista}")
+
+            elif action != "0":
+                print("Opción inválida.")
         elif opcion == "5":
             try:
                 song_id = int(input("Ingrese el ID de la canción: "))
@@ -92,7 +173,6 @@ def main():
 
             else:
                 print("Opción inválida.")
-
         elif opcion == "7":
             print("1. Registrar canción en el historial")
             print("2. Ver última canción")
@@ -172,10 +252,10 @@ def main():
                 else:
                     for song in queue:
                         print(f"{song.id}. {song.titulo} - {song.artista}")
-        elif opcion in {"2", "3", "4", "9"}:
+        elif opcion in {"2", "4", "9"}:
             pendiente()
         else:
-            print("Opción inválida.")
+            print("Opcion invalida.")
 
 
 if __name__ == "__main__":
