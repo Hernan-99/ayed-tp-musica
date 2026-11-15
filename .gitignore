@@ -1,14 +1,22 @@
+#Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
+
+# Entorno
 .env
 .idea/
 .vscode/
+
+#Archivos generados
 *.bin
 *.dat
+data/canciones_guardadas.txt
+
+# SO
 .DS_Store
 Thumbs.db
 
-## 
+# Consignas
 consignas-1.pdf

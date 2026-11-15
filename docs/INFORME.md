@@ -92,9 +92,137 @@ La búsqueda binaria se midió sobre una colección previamente ordenada, sin in
 
 ## 6. Persistencia (E5)
 
-- Layout del registro binario (campos, `struct`, anchos):
-- Header:
-- Cómo se actualiza un registro por posición:
+Se implementó la persistencia del catálogo de la Biblioteca Musical mediante archivos de texto y archivos binarios. El objetivo es permitir almacenar, recuperar y modificar las canciones sin depender exclusivamente de los datos mantenidos en memoria durante la ejecución.
+
+### 6.1. Persistencia en archivos de texto
+
+Se implementaron las funciones `cargar_texto()` y `guardar_texto()` en el módulo `src/persistencia/texto.py`.
+
+El archivo `data/canciones.txt` contiene el catálogo inicial. Cada fila representa una canción y utiliza los siguientes campos:
+
+| Campo | Descripción |
+| --- | --- |
+| `id` | Identificador único de la canción. |
+| `titulo` | Título de la canción. |
+| `artista` | Nombre del artista o grupo. |
+| `album` | Álbum al que pertenece. |
+| `genero` | Género musical. |
+| `anio` | Año de publicación. |
+| `duracion_seg` | Duración expresada en segundos. |
+
+La función `cargar_texto()` lee los registros y permite construir el catálogo inicial mediante `create_catalog_from_txt()`. La función `guardar_texto()` permite exportar el catálogo actualizado a `data/canciones_guardadas.txt`.
+
+Se realizan validaciones sobre la estructura de los datos y se utiliza `ArchivoInvalidoError` para informar errores de formato.
+
+### 6.2. Formato del archivo binario
+
+El catálogo se almacena en `data/canciones.bin` mediante registros de longitud fija, utilizando el módulo `struct` de Python.
+
+**Cabecera del archivo:**
+
+| Campo | Formato `struct` | Tamaño |
+| --- | --- | --- |
+| Identificador mágico | `4s` | 4 bytes |
+| Identificador de tema | `1s` | 1 byte |
+| Cantidad de registros | `I` | 4 bytes |
+| **Total** | **`<4s1sI`** | **9 bytes** |
+
+- Identificador mágico: `AYED`.
+- Identificador de tema: `M`, correspondiente a Biblioteca Musical.
+- Cantidad de registros: número de canciones almacenadas.
+- El símbolo `<` indica orden de bytes *little-endian* y tamaños estándar sin relleno automático.
+
+**Layout de cada registro:**
+
+| Campo | Formato `struct` | Tamaño |
+| --- | --- | --- |
+| `id` | `I` | 4 bytes |
+| `titulo` | `30s` | 30 bytes |
+| `artista` | `60s` | 60 bytes |
+| `album` | `30s` | 30 bytes |
+| `genero` | `12s` | 12 bytes |
+| `anio` | `H` | 2 bytes |
+| `duracion_seg` | `H` | 2 bytes |
+| **Total** | **`<I30s60s30s12s2H`** | **140 bytes** |
+
+Los campos de texto se codifican en UTF-8 y se completan con bytes nulos (`\x00`) hasta alcanzar su longitud fija. El campo `genero` almacena el nombre del género musical en 12 bytes, aunque dentro del programa se representa mediante un identificador numérico del 1 al 6. Durante la lectura, el nombre se convierte nuevamente a su identificador correspondiente.
+
+Los campos numéricos se almacenan mediante enteros sin signo.
+
+El tamaño total del archivo se calcula mediante:
+
+`Tamaño total = 9 + (140 × cantidad de registros)`
+
+Para un catálogo de 67 canciones, el tamaño esperado es:
+
+`9 + (140 × 67) = 9389 bytes`
+
+### 6.3. Operaciones de persistencia binaria
+
+Se implementaron las siguientes funciones en `src/persistencia/binario.py`:
+
+| Función | Descripción |
+| --- | --- |
+| `guardar_binario()` | Escribe la cabecera y todos los registros del catálogo. |
+| `cargar_binario()` | Lee y valida el archivo binario para reconstruir el catálogo. |
+| `actualizar_registro()` | Modifica un registro específico mediante acceso directo. |
+| `alta_binario()` | Incorpora una canción al archivo binario. |
+| `baja_binario()` | Elimina una canción del archivo binario. |
+
+Las operaciones están disponibles desde la opción 9 del menú principal, que permite guardar, cargar, agregar, eliminar y modificar canciones.
+
+### 6.4. Actualización de un registro por posición
+
+La modificación de una canción se realiza mediante acceso directo al archivo binario, sin necesidad de reescribir todos sus registros.
+
+Como los registros tienen longitud fija, la posición de un registro se calcula mediante:
+
+`Desplazamiento = tamaño_cabecera + (posición × tamaño_registro)`
+
+En este proyecto:
+
+`Desplazamiento = 9 + (posición × 140)`
+
+La posición comienza en cero. Por ejemplo, el tercer registro se encuentra en el desplazamiento:
+
+`9 + (2 × 140) = 289 bytes`
+
+La función `actualizar_registro()` utiliza `seek()` para posicionarse en el desplazamiento calculado y sobrescribir únicamente el registro correspondiente.
+
+Antes de realizar la modificación, se valida la cabecera, se comprueba que la posición solicitada esté dentro del rango permitido y se verifica que el tamaño del archivo coincida con la cantidad de registros declarada.
+
+Esta operación mantiene constante el tamaño del archivo y evita reescribir el catálogo completo.
+
+### 6.5. Alta y baja de canciones
+
+**Alta:** la función `alta_binario()` valida la cabecera y el tamaño del archivo, verifica que no exista otra canción con el mismo identificador y agrega el nuevo registro al final. Posteriormente, actualiza la cantidad de registros almacenada en la cabecera.
+
+**Baja:** la función `baja_binario()` carga el catálogo desde el archivo binario, recorre las canciones y construye una nueva colección excluyendo aquella cuyo identificador coincide con el solicitado. Si el ID no existe, se informa mediante `ArchivoInvalidoError`. Si existe, se reescribe el archivo completo mediante `guardar_binario()`, actualizando automáticamente la cantidad de registros de la cabecera.
+
+A diferencia de la modificación, que utiliza acceso directo mediante `seek()`, la baja requiere reescribir el archivo para conservar la estructura de registros consecutivos.
+
+Después de las operaciones de alta, baja y modificación, el programa sincroniza el catálogo en memoria y actualiza la exportación de texto mediante `save_catalog_text()`.
+
+### 6.6. Validación de archivos
+
+Durante la lectura se comprueba que el archivo binario tenga una estructura válida. Entre las situaciones contempladas se encuentran:
+
+- Cabecera incompleta o con identificador mágico incorrecto.
+- Identificador de tema distinto de `M`.
+- Archivo binario truncado o con registros incompletos.
+- Género musical no reconocido.
+- Presencia de bytes adicionales después del último registro declarado en la cabecera.
+- Archivo de texto con una estructura inválida.
+
+Ante estas situaciones, se utiliza la excepción `ArchivoInvalidoError` para informar el problema y evitar trabajar con registros inconsistentes.
+
+### 6.7. Integración con el catálogo
+
+Al iniciar el programa, se comprueba si existe `data/canciones.bin`. Si está disponible, se carga el catálogo desde ese archivo; de lo contrario, se utiliza `data/canciones.txt`.
+
+Las relaciones entre canciones originales y versiones derivadas se recuperan desde `data/versiones.txt` y se vinculan con las canciones existentes mediante `restore_song_versions()`.
+
+De esta manera, el programa conserva la funcionalidad desarrollada en entregas anteriores y permite recuperar los datos persistidos entre ejecuciones.
 
 ## 7. Reparto de trabajo (E6)
 

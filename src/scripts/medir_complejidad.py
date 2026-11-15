@@ -1,7 +1,8 @@
 
 import time
 
-from src.dominio.song import library
+from pathlib import Path
+from src.dominio.song import create_catalog_from_txt
 from src.algoritmos.busqueda import busqueda_lineal, busqueda_binaria
 from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
 
@@ -33,8 +34,12 @@ def measure_sort(function, collection, get_key, repetitions=5):
 
 
 def main():
-    original_library = library.copy()
-    enlarged_library = library * 10
+    data_dir = Path(__file__).resolve().parents[2] / "data"
+
+    catalog = create_catalog_from_txt(data_dir / "canciones.txt")
+
+    original_library = list(catalog)
+    enlarged_library = original_library * 10
 
     datasets = {
         "Original (67 canciones)": original_library,
