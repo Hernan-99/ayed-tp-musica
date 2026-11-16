@@ -105,12 +105,14 @@ def main():
     data_dir = Path(__file__).resolve().parents[1] / "data"
     binary_path = data_dir / "canciones.bin"
 
-    if binary_path.exists():
-        catalog = cargar_binario(binary_path)
-    else:
-        catalog = create_catalog_from_txt(data_dir / "canciones.txt")
-
-    restore_song_versions(catalog, data_dir)
+    try:
+        if binary_path.exists():
+            catalog = cargar_binario(binary_path)
+        else:
+            catalog = create_catalog_from_txt(data_dir / "canciones.txt")
+    except (ArchivoInvalidoError, OSError) as e:
+        print(f"Error al cargar el catálogo: {e}")
+        return
 
     library = list(catalog)
 
@@ -128,6 +130,27 @@ def main():
             print("Chau.")
         elif opcion == "1":
             lists_songs(catalog)
+        elif opcion == "2":
+            print("=== Ver detalles de la cancion ===")
+            try:
+                song_id = int(input("Ingresar el ID de la cancion: "))
+            except ValueError:
+                print("Ingresá un ID numérico válido")
+            else:
+                song= next(
+                    (item for item in catalog if item.id == song_id),
+                    None
+                )
+                if song is None:
+                    print("Cancion no encontrada")
+                else:
+                    print(f"ID: {song.id}")
+                    print(f"Título: {song.titulo}")
+                    print(f"Artista: {song.artista}")
+                    print(f"Álbum: {song.album}")
+                    print(f"Género: {song.genero}")
+                    print(f"Año: {song.anio}")
+                    print(f"Duración: {song.duracion_seg} segundos")      
         elif opcion == "3":
             print("=== Buscar cancion ===")
             print("1. Búsqueda lineal")
@@ -206,8 +229,11 @@ def main():
             except ValueError:
                 print("Ingresá un ID numérico válido.")
         elif opcion == "6":
+            print("=== Modificar playlist ===")
             print("1. Agregar canción")
             print("2. Listar playlist")
+            print("3. Eliminar canción")
+            print("0. Volver")
             action = input("> ").strip()
 
             if action == "1":
@@ -236,7 +262,22 @@ def main():
                     for song in playlist:
                         print(f"{song.id}. {song.titulo} - {song.artista}")
 
-            else:
+            elif action == "3":
+                try:
+                    song_id = int(input("ID de la canción a eliminar: "))
+                except ValueError:
+                    print("Ingresá un ID numérico válido.")
+                else:
+                    song = next(
+                        (item for item in playlist if item.id == song_id),
+                        None,
+                    )
+                    if song is None:
+                        print("La cancion no esta en la playlist")
+                    else:
+                        playlist.eliminar(song)
+                        print(f"Eliminada de la playlist: {song.titulo}")
+            elif action != "0":
                 print("Opción inválida.")
         elif opcion == "7":
             print("1. Registrar canción en el historial")
@@ -334,10 +375,15 @@ def main():
                     print("Catálogo guardado en texto y binario correctamente.")
                 elif action == "2":
                     catalog = cargar_binario(binary_path)
-
                     restore_song_versions(catalog, data_dir)
-
                     library = list(catalog)
+                    
+                    playlist = Playlist(capacity=6)
+                    history = Pila()
+                    queue = Cola()
+
+                    print("Playlist, historial y cola reiniciados tras cargar el catálogo.")
+
                     print(
                         f"Catálogo cargado: {catalog.tamanio()} canciones."
                     )
@@ -422,6 +468,10 @@ def main():
 
                                 restore_song_versions(catalog, data_dir)
                                 library = list(catalog)
+
+                                playlist = Playlist(capacity=6)
+                                history = Pila()
+                                queue = Cola()
 
                                 save_catalog_text(catalog, data_dir)
 
@@ -520,13 +570,15 @@ def main():
                                     restore_song_versions(catalog, data_dir)
                                     library = list(catalog)
 
+                                    playlist = Playlist(capacity=6)
+                                    history = Pila()
+                                    queue = Cola()
+
                                     save_catalog_text(catalog, data_dir)
 
                                     print("Canción modificada correctamente.")
             except ArchivoInvalidoError as e:
                 print(f"Error de persistencia: {e}")
-        elif opcion in {"2"}:
-            pendiente()
         else:
             print("Opcion invalida.")
 
